@@ -538,7 +538,7 @@ public class UserMenu extends javax.swing.JFrame {
                 rs = st.executeQuery(querysucursal);
                 while (rs.next()) {
                     int idSucursal = rs.getInt("idSucursal");
-                    EmpleadoForm empleadoForm = new EmpleadoForm(this, true);
+                    EmpleadosporSucursal empleadoForm = new EmpleadosporSucursal(this, true);
                     empleadoForm.setVisible(true);
                     empleadoForm.recibesucursales(idSucursal);
                 }
