@@ -23,7 +23,7 @@ public class ShowUserForm extends javax.swing.JDialog {
     }
 
     //1. Crear un metodo que nos permite mostar la informacion que esta en la consola
-    public void recibeDatos(int idEmp,String nombre, String apellidos, String tipoDoc, String Documento, String correo, String sucursal) {
+    public void recibeDatos(int idEmp, String nombre, String apellidos, String tipoDoc, String Documento, String correo, String sucursal) {
         System.out.println("sucursal: " + sucursal + "\nnombre: " + nombre + " " + apellidos + "\ndocumento: " + tipoDoc
                 + " " + "\ncorreo: " + correo);
         txtSucursal.setText(sucursal);
@@ -59,7 +59,7 @@ public class ShowUserForm extends javax.swing.JDialog {
                             + "' WHERE `idEmp` = " + idEmpleado + ";";
                     System.out.println(query);
                     try {
-                         st.executeUpdate(query);
+                        st.executeUpdate(query);
                         JOptionPane.showMessageDialog(this, "Se han actualizado los datos del empleado.", "", JOptionPane.INFORMATION_MESSAGE);
                         this.dispose();
                     } catch (SQLException e) {
@@ -255,7 +255,7 @@ public class ShowUserForm extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
-      
+
     }//GEN-LAST:event_btnActualizarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed

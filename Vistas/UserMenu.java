@@ -37,42 +37,39 @@ public class UserMenu extends javax.swing.JFrame {
 
     private void listarDepartamentos() {
         String nombreDepartamento = txtDepartamento.getText();
-        if (nombreDepartamento.isEmpty()){
-        String query = "SELECT nombreSucursal, nombreDepartamento, CONCAT('Zona ', zona, '. ', tipoCalle, ' ', numero1,' #No. ', numero2, ' - ', numero3) \n" +
-"AS direccion FROM direccion INNER JOIN sucursal WHERE idDireccion = FK_idDireccion AND nombreDepartamento LIKE '%%'ORDER BY nombreDepartamento;";
-        try {
-            connection = conexion.getConnection();
-            st = connection.createStatement();
-            rs = st.executeQuery(query);
-            Object[] departamentos = new Object[3];
-            contenidoTablaDepartamento = (DefaultTableModel) tblDepartamentos.getModel();
-            while (rs.next()) {
-                departamentos[0] = rs.getString("nombreSucursal");
-                departamentos[1] = rs.getString("nombreDepartamento");
-                departamentos[2] = rs.getString("direccion");
-                contenidoTablaDepartamento.addRow(departamentos);
-                tblDepartamentos.setModel(contenidoTablaDepartamento);
-            }
+        if (nombreDepartamento.isEmpty()) {
+            String query = "SELECT nombreSucursal, nombreDepartamento, CONCAT('Zona ', zona, '. ', tipoCalle, ' ', numero1,' #No. ', numero2, ' - ', numero3) \n"
+                    + "AS direccion FROM direccion INNER JOIN sucursal WHERE idDireccion = FK_idDireccion AND nombreDepartamento LIKE '%%'ORDER BY nombreDepartamento;";
+            try {
+                connection = conexion.getConnection();
+                st = connection.createStatement();
+                rs = st.executeQuery(query);
+                Object[] departamentos = new Object[3];
+                contenidoTablaDepartamento = (DefaultTableModel) tblDepartamentos.getModel();
+                while (rs.next()) {
+                    departamentos[0] = rs.getString("nombreSucursal");
+                    departamentos[1] = rs.getString("nombreDepartamento");
+                    departamentos[2] = rs.getString("direccion");
+                    contenidoTablaDepartamento.addRow(departamentos);
+                    tblDepartamentos.setModel(contenidoTablaDepartamento);
+                }
 
-        } catch (SQLException e) {
-            System.out.println("Error");
-        }
-      }else{
-          String query = "SELECT nombreSucursal, nombreDepartamento, CONCAT('Zona ', zona, '. ', tipoCalle, ' ', numero1,' #No. ', numero2, ' - ', numero3) AS direccion FROM direccion INNER JOIN sucursal WHERE idDireccion = FK_idDireccion AND nombreDepartamento LIKE '%"+nombreDepartamento+"%'ORDER BY nombreDepartamento;";
-            System.out.println(query);
-                    
+            } catch (SQLException e) {
+                System.out.println("Error");
             }
+        } else {
+            String query = "SELECT nombreSucursal, nombreDepartamento, CONCAT('Zona ', zona, '. ', tipoCalle, ' ', numero1,' #No. ', numero2, ' - ', numero3) AS direccion FROM direccion INNER JOIN sucursal WHERE idDireccion = FK_idDireccion AND nombreDepartamento LIKE '%" + nombreDepartamento + "%'ORDER BY nombreDepartamento;";
+            System.out.println(query);
+
+        }
 
     }
-
-
-   
 
     // 4. Metodo que trae todos los empleados existentes en la base de datos
     public void listarEmpleados() {
         String nombre = txtBuscarEmp.getText();
-            if (nombre.isEmpty()) {
-            String queryConsulta ="SELECT nombreEmp,apellidos,tipoDocumento,documento,correo,nombreSucursal FROM empleado INNER JOIN sucursal WHERE empleado.FK_idSucursal = sucursal.idSucursal";
+        if (nombre.isEmpty()) {
+            String queryConsulta = "SELECT nombreEmp,apellidos,tipoDocumento,documento,correo,nombreSucursal FROM empleado INNER JOIN sucursal WHERE empleado.FK_idSucursal = sucursal.idSucursal";
             // 5. Intentar ejecutar el query y obtener una respuesta de la base de datos
             try {
                 connection = conexion.getConnection();
@@ -93,14 +90,14 @@ public class UserMenu extends javax.swing.JFrame {
                     contenidoTablaEmpleados.addRow(empleados);
                     tblEmpleados.setModel(contenidoTablaEmpleados);
                 }
-                
+
             } catch (SQLException e) {
                 System.out.println("Error");
-               
+
             }
 
         } else {
-            String queryConsulta =  "SELECT nombreEmp,apellidos,tipoDocumento,documento,correo,nombreSucursal FROM empleado INNER JOIN sucursal WHERE empleado.FK_idSucursal = sucursal.idSucursal AND nombreEmp LIKE '%" + txtBuscarEmp + "%' OR apellidos LIKE '%" + txtBuscarEmp + "%'";
+            String queryConsulta = "SELECT nombreEmp,apellidos,tipoDocumento,documento,correo,nombreSucursal FROM empleado INNER JOIN sucursal WHERE empleado.FK_idSucursal = sucursal.idSucursal AND nombreEmp LIKE '%" + txtBuscarEmp + "%' OR apellidos LIKE '%" + txtBuscarEmp + "%'";
             System.out.println(queryConsulta);
             try {
                 connection = conexion.getConnection();
@@ -108,7 +105,7 @@ public class UserMenu extends javax.swing.JFrame {
                 rs = st.executeQuery(queryConsulta);
                 Object[] empleados = new Object[6];
                 contenidoTablaEmpleados = (DefaultTableModel) tblEmpleados.getModel();
-              
+
                 while (rs.next()) {
                     empleados[0] = rs.getInt("nombreEmp");
                     empleados[1] = rs.getString("apellidos");
@@ -119,7 +116,7 @@ public class UserMenu extends javax.swing.JFrame {
                     contenidoTablaEmpleados.addRow(empleados);
                     tblEmpleados.setModel(contenidoTablaEmpleados);
                 }
-                
+
             } catch (SQLException e) {
                 System.out.println("Error ");
                 System.out.println(e);
@@ -155,12 +152,12 @@ public class UserMenu extends javax.swing.JFrame {
         cbDepartamento.setSelectedIndex(0);
         cbTipoCalle.setSelectedIndex(0);
         cbZona.setSelectedIndex(0);
-     
+
         txtNumero1.setText("");
         txtNumero2.setText("");
         txtNumero3.setText("");
-        
-        }
+
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -193,9 +190,6 @@ public class UserMenu extends javax.swing.JFrame {
         txtNumero2 = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         txtNumero3 = new javax.swing.JTextField();
-        btnGuardar = new javax.swing.JButton();
-        btnEdit = new javax.swing.JButton();
-        btnEliminar = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         tblDepartamentos = new javax.swing.JTable();
         jLabel10 = new javax.swing.JLabel();
@@ -369,65 +363,35 @@ public class UserMenu extends javax.swing.JFrame {
             }
         });
 
-        btnGuardar.setIcon(new javax.swing.ImageIcon("C:\\Users\\Usuario\\Documents\\NetBeansProjects\\Reto3_g53EricGarcia\\src\\assets\\confirmIcon.png")); // NOI18N
-        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGuardarActionPerformed(evt);
-            }
-        });
-
-        btnEdit.setIcon(new javax.swing.ImageIcon("C:\\Users\\Usuario\\Documents\\NetBeansProjects\\Reto3_g53EricGarcia\\src\\assets\\confirmIcon.png")); // NOI18N
-        btnEdit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEditActionPerformed(evt);
-            }
-        });
-
-        btnEliminar.setIcon(new javax.swing.ImageIcon("C:\\Users\\Usuario\\Documents\\NetBeansProjects\\Reto3_g53EricGarcia\\src\\assets\\confirmIcon.png")); // NOI18N
-        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEliminarActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addComponent(cbDepartamento, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(26, 26, 26)
-                                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(cbZona, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addComponent(cbTipoCalle, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtNumero1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtNumero2, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(31, 31, 31)
-                                .addComponent(txtNumero3, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(cbDepartamento, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(26, 26, 26)
+                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(cbZona, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(205, 205, 205)
-                        .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cbTipoCalle, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtNumero1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtNumero2, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(31, 31, 31)
+                        .addComponent(txtNumero3, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(61, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
@@ -448,12 +412,7 @@ public class UserMenu extends javax.swing.JFrame {
                     .addComponent(txtNumero2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9)
                     .addComponent(txtNumero3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnGuardar)
-                    .addComponent(btnEdit)
-                    .addComponent(btnEliminar))
-                .addContainerGap())
+                .addContainerGap(95, Short.MAX_VALUE))
         );
 
         tblDepartamentos.setBackground(new java.awt.Color(167, 254, 254));
@@ -544,7 +503,7 @@ public class UserMenu extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jTabbedPane8)
                 .addContainerGap())
@@ -561,6 +520,96 @@ public class UserMenu extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnSearchDepartamentosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchDepartamentosActionPerformed
+        this.borrarDatosTablaDepartamentos();
+        this.listarDepartamentos();
+    }//GEN-LAST:event_btnSearchDepartamentosActionPerformed
+
+    private void btnListarEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarEmpleadosActionPerformed
+        int nroFila = tblDepartamentos.getSelectedRow();
+        if (nroFila != -1) {
+            System.out.println(nroFila);
+            String sucursal = tblDepartamentos.getValueAt(nroFila, 0).toString();
+            String departamento = tblDepartamentos.getValueAt(nroFila, 1).toString();
+            String querysucursal = "SELECT  idsucursal FROM sucursal WHERE nombreSucursal = '" + sucursal + "';";
+            try {
+                connection = conexion.getConnection();
+                st = connection.createStatement();
+                rs = st.executeQuery(querysucursal);
+                while (rs.next()) {
+                    int idSucursal = rs.getInt("idSucursal");
+                    EmpleadoForm empleadoForm = new EmpleadoForm(this, true);
+                    empleadoForm.setVisible(true);
+                    empleadoForm.recibesucursales(idSucursal);
+                }
+            } catch (SQLException e) {
+                System.out.println(e);
+
+            }
+
+            System.out.println(querysucursal);
+
+        } else {
+            JOptionPane.showMessageDialog(this, "Para añadir un empleado debes seleccionar la Sucursal a la que pertenece", "", JOptionPane.WARNING_MESSAGE);
+        }
+
+    }//GEN-LAST:event_btnListarEmpleadosActionPerformed
+
+    private void tblDepartamentosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDepartamentosMouseClicked
+        int row = tblDepartamentos.getSelectedRow();
+        if (row > -1) {
+            String sucursal = tblDepartamentos.getValueAt(row, 0).toString();
+            String departamento = tblDepartamentos.getValueAt(row, 1).toString();
+            String query = "SELECT idDireccion FROM  `direccion` INNER JOIN sucursal WHERE direccion.idDireccion = sucursal.FK_idDireccion AND sucursal.nombreSucursal = '" + sucursal + "';";
+            System.out.println(query);
+            try {
+                connection = conexion.getConnection();
+                st = connection.createStatement();
+                rs = st.executeQuery(query);
+                while (rs.next()) {
+                    int idDireccion = rs.getInt("idDireccion");
+                    System.out.println("id capturados: " + idDireccion);
+                    String queryDireccion = "SELECT zona, tipoCalle, numero1,numero2, numero3 FROM `direccion` WHERE idDireccion = " + idDireccion + ";";
+                    try {
+                        rs = st.executeQuery(queryDireccion);
+                        while (rs.next()) {
+                            String zona = rs.getString("zona");
+                            String tipocalle = rs.getString("tipocalle");
+                            String numero1 = rs.getString("numero1");
+                            String numero2 = rs.getString("numero2");
+                            String numero3 = rs.getString("numero3");
+                            GestionarSucursalesForm gestionarSucursales = new GestionarSucursalesForm(this, true);
+                            gestionarSucursales.recibirDatosSucursales(idDireccion,sucursal,departamento,zona,tipocalle,numero1,numero2,numero3);
+                            gestionarSucursales.setVisible(true);
+                            this.borrarDatosTabla();
+                            this.listarDepartamentos();
+                        }
+                    } catch (SQLException e) {
+                        System.out.println(e);
+                    }
+
+                }
+
+            } catch (SQLException e) {
+                System.out.println(e);
+
+            }
+        }
+
+    }//GEN-LAST:event_tblDepartamentosMouseClicked
+
+    private void txtNumero3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNumero3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNumero3ActionPerformed
+
+    private void cbZonaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbZonaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbZonaActionPerformed
+
+    private void cbDepartamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbDepartamentoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbDepartamentoActionPerformed
+
     private void tblEmpleadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblEmpleadosMouseClicked
         //1.Crear una variable que permite capturar la informacion seleccionada
         int row = tblEmpleados.getSelectedRow();
@@ -575,15 +624,15 @@ public class UserMenu extends javax.swing.JFrame {
             String tipoDocumento = tblEmpleados.getValueAt(row, 2).toString();
             String documento = tblEmpleados.getValueAt(row, 3).toString();
             String correo = tblEmpleados.getValueAt(row, 4).toString();
-            int  idSucursal = Integer.parseInt(tblEmpleados.getValueAt(row,5).toString());
-                       
+            int idSucursal = Integer.parseInt(tblEmpleados.getValueAt(row, 5).toString());
+
             System.out.println("idSucursal: " + idSucursal + "\nnombre: " + nombreEmp + " "
                     + apellidos + "\ndocumento: " + tipoDocumento + " " + documento
                     + "\ncorreo: " + correo);
             ShowUserForm showUserForm = new ShowUserForm(this, true);
             //Mediante la instancia del JDialog enviamos los datos del empleado
             //de esta vista actual a la vista que muestra la información en detalle
-            showUserForm.recibeDatos(nombreEmp, apellidos, tipoDocumento, documento, correo,idSucursal);
+            showUserForm.recibeDatos(nombreEmp, apellidos, tipoDocumento, documento, correo, idSucursal);
             showUserForm.setVisible(true);
             //Para que se actualice la informacion del empleado que se acaba de editar
             //se debe borar todos los datos de la tabla y volverlos a cargar
@@ -603,133 +652,7 @@ public class UserMenu extends javax.swing.JFrame {
         addUserF.setVisible(true);
         borrarDatosTabla();
         listarEmpleados();
-
     }//GEN-LAST:event_btnAddUserActionPerformed
-
-    private void cbDepartamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbDepartamentoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cbDepartamentoActionPerformed
-
-    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        String departamentoOption = cbDepartamento.getSelectedItem().toString();
-        String zonaOption = cbZona.getSelectedItem().toString();
-        String tipoCalleOption = cbTipoCalle.getSelectedItem().toString();
-        String numero1 = txtNumero1.getText();
-        String numero2 = txtNumero2.getText();
-        String numero3 = txtNumero3.getText();
-
-        String queryDireccion = "INSERT INTO `direccion`(`zona`, `tipoCalle`, `numero1`, "
-                + "`numero2`, `numero3`, `nombreDepartamento`) VALUES ('" + zonaOption
-                + "','" + tipoCalleOption + "','" + numero1 + "','" + numero2 + "','" + numero3
-                + "','" + departamentoOption + "');";
-        System.out.println(queryDireccion);
-        try {
-            connection = conexion.getConnection();
-            st = connection.createStatement();
-            st.executeUpdate(queryDireccion);
-           String queryIdDireccion = "SELECT idDireccion FROM `direccion` WHERE nombreDepartamento = '" 
-                    + departamentoOption + "'AND zona ='" + zonaOption  + "'AND tipoCalle ='" 
-                    + tipoCalleOption + "'AND numero1 ='" + numero1 + "'AND numero2 ='" + numero2 + "'AND numero3 ='"+ numero3 +"' ;";
-           
-            try{
-                rs = st.executeQuery(queryIdDireccion);
-                SucursalForm sucursalForm = new SucursalForm(this,true);
-                sucursalForm.setVisible(true);
-                while(rs.next()){
-                    int idDireccion = rs.getInt("idDireccion");
-                     sucursalForm.recibeIdDireccion(idDireccion);
-                     System.out.println("Envia" + idDireccion);
-                }
-               
-                borrarDatosTablaDepartamentos();
-                listarDepartamentos();
-            }catch (SQLException e ){
-                System.out.println(e);
-                
-            }
-            
-            
-            
-            JOptionPane.showMessageDialog(this, "La Sucursal ha sido creada con exito.");   
-
-        } catch (SQLException e) {
-            System.out.println(e);
-            JOptionPane.showMessageDialog(this, "No se pudo añadir el departamento", "", JOptionPane.ERROR_MESSAGE);
-
-        }
-
-    }//GEN-LAST:event_btnGuardarActionPerformed
-
-    private void cbZonaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbZonaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cbZonaActionPerformed
-
-    private void txtNumero3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNumero3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNumero3ActionPerformed
-
-    private void btnListarEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarEmpleadosActionPerformed
-      int nroFila = tblDepartamentos.getSelectedRow();
-      if (nroFila != -1) {
-      System.out.println(nroFila);
-        String sucursal = tblDepartamentos.getValueAt(nroFila, 0).toString();
-        String departamento = tblDepartamentos.getValueAt(nroFila, 1).toString();
-        String querysucursal = "SELECT  idsucursal FROM sucursal WHERE nombreSucursal = '"+ sucursal +"';";
-        try{
-            connection = conexion.getConnection();
-            st = connection.createStatement();
-            rs = st.executeQuery(querysucursal);
-            while(rs.next()){
-            int idSucursal = rs.getInt("idSucursal");    
-            EmpleadoForm empleadoForm = new EmpleadoForm(this, true);
-            empleadoForm.setVisible(true);
-            empleadoForm.recibesucursales(idSucursal);
-            }
-        }catch(SQLException e){
-            System.out.println(e);
-            
-        }
-        
-        System.out.println(querysucursal);
-        
-        
-      } else{
-             JOptionPane.showMessageDialog(this, "Para añadir un empleado debes seleccionar la Sucursal a la que pertenece", "", JOptionPane.WARNING_MESSAGE);
-      }
-        
-    }//GEN-LAST:event_btnListarEmpleadosActionPerformed
-
-    private void btnSearchDepartamentosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchDepartamentosActionPerformed
-       this.borrarDatosTablaDepartamentos();
-       this.listarDepartamentos();
-    }//GEN-LAST:event_btnSearchDepartamentosActionPerformed
-
-    private void tblDepartamentosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDepartamentosMouseClicked
-    int fileSeleccionada = tblDepartamentos.getSelectedRow();
-      if(fileSeleccionada >-1){    
-        btnGuardar.setVisible(false);
-    }else{
-         btnGuardar.setVisible(true);
-      }
-    }//GEN-LAST:event_tblDepartamentosMouseClicked
-
-    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
-      int fileSeleccionada = tblDepartamentos.getSelectedRow();
-      if(fileSeleccionada >-1){    
-        btnEdit.setVisible(true);
-    }else{
-         btnEdit.setVisible(false);
-      }
-    }//GEN-LAST:event_btnEditActionPerformed
-
-    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        int fileSeleccionada = tblDepartamentos.getSelectedRow();
-        if (fileSeleccionada > -1) {
-            btnEliminar.setVisible(true);
-        } else {
-            btnEliminar.setVisible(false);
-        }
-    }//GEN-LAST:event_btnEliminarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -767,14 +690,10 @@ public class UserMenu extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-      
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddUser;
-    public javax.swing.JButton btnEdit;
-    public javax.swing.JButton btnEliminar;
-    public javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnListarEmpleados;
     private javax.swing.JButton btnSearch;
     private javax.swing.JButton btnSearchDepartamentos;
